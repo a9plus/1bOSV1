@@ -25,6 +25,8 @@
 #made it use farenheit for api requests bc thats what my code is for
 #sorry euros
 
+######## IMPORTANT PLS DONT RELY ON Zip itS buggy OH CRAP MY SHIFT EY WAS LETTING GO BUT LISTEN. THE ZIP DOESNT HAVE A CONFIGURED COUNTRY SO YK JUST DONT
+
 import time
 import math
 import traceback
