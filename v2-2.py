@@ -29,6 +29,9 @@
 #spinny game is newwwwww
 #very fun 10/10
 
+#2.21 stuff
+#bugfixes
+
 import time
 import math
 import traceback
@@ -135,9 +138,6 @@ def pressed():
         == gpiod.line.Value.INACTIVE
     )
 
-if mode == "spinny":
-
-    spinny_hit()
 
 # ======================
 # CLOCK
@@ -1007,6 +1007,8 @@ def red_flash():
 
         time.sleep(.2)
 
+
+
 # ======================
 # APPS
 # ======================
@@ -1115,7 +1117,7 @@ try:
 
             draw_weather()
 
-      elif mode == "spinny":
+        elif mode == "spinny":
 
             spinny_update()
             draw_spinny()
@@ -1206,7 +1208,10 @@ try:
             if mode == "timer":
 
                 add_minute()
+            
+            elif mode == "spinny":
 
+                spinny_hit()
 
 
         time.sleep(.05)
