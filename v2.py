@@ -14,11 +14,16 @@
 #          `-'----'                            
 #i used https://patorjk.com/software/taag/ for the ascii art btw
 #
-#1bos v2
+#1bos v2.1
 #you can sav as main.py also
 #run with sudo python3 main.py (or whatever the heck you called it)
 #new stuff:
-#WEATHER APP!!!! LESGOOOO THIS TOOK SO LONG TO MAKE BUT I HAVENT EVEN TESTED BUT ITLL PROB WORK
+#WEATHER APP!!!! LESGOOOO THIS TOOK SO LONG TO MAKE BUT I HAVENT EVEN TESTED BUT ITLL PROB WORK. IT DOES BC I JUST TESTED
+
+#2.1 stuff
+#made it not crash if u enter zip
+#made it use farenheit for api requests bc thats what my code is for
+#sorry euros
 
 import time
 import math
@@ -365,30 +370,41 @@ def find_weather_location():
     print()
     print("Weather location needed")
     print()
-    print("Options:")
-    print("zip")
-    print("lat,lon")
+    print("Enter ZIP code or lat,lon")
 
 
-    value = input("> ")
+    value = input("> ").strip()
 
 
 
-    if value.lower() == "zip":
+    # Latitude,Longitude input
 
-        zip_code = input(
-            "ZIP: "
+    if "," in value:
+
+        lat, lon = value.split(",")
+
+        return (
+            float(lat),
+            float(lon)
         )
+
+
+
+    # ZIP code input
+
+    else:
+
+        zip_code = value
 
 
         r = requests.get(
             "https://nominatim.openstreetmap.org/search",
             params={
-                "postalcode":zip_code,
-                "format":"json"
+                "postalcode": zip_code,
+                "format": "json"
             },
             headers={
-                "User-Agent":"1bOS"
+                "User-Agent": "1bOS"
             },
             timeout=5
         )
@@ -397,7 +413,7 @@ def find_weather_location():
         data = r.json()
 
 
-        if len(data)==0:
+        if len(data) == 0:
 
             raise Exception(
                 "ZIP not found"
@@ -408,18 +424,6 @@ def find_weather_location():
             float(data[0]["lat"]),
             float(data[0]["lon"])
         )
-
-
-    else:
-
-        lat,lon=value.split(",")
-
-
-        return (
-            float(lat),
-            float(lon)
-        )
-
 # ======================
 # WEATHER CACHE
 # ======================
@@ -456,13 +460,10 @@ def fetch_weather():
     r = requests.get(
         "https://api.open-meteo.com/v1/forecast",
         params={
-
             "latitude":lat,
-
             "longitude":lon,
-
-            "current_weather":"true"
-
+            "current_weather":"true",
+            "temperature_unit":"fahrenheit"
         },
 
         timeout=5
